@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
-const TodoScren = props => {
+const TodoScreen = props => {
   return (
     <View>
 			<Text>Todo screen</Text> 
@@ -11,4 +11,4 @@ const TodoScren = props => {
 
 const styles = StyleSheet.create({});
 
-export default TodoScren;
+export default TodoScreen;
