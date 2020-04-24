@@ -1,15 +1,30 @@
-import React from 'react';
-import { View, StyleSheet, TextInput, Button } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, TextInput, Button, Alert } from 'react-native';
 
 const AddTodo = ({ onSubmit }) => {
+  const [value, setValue] = useState('');
+
   const handleSubmit = () => {
-    onSubmit('test todo');
+    if (value.trim()) {
+      onSubmit(value);
+      setValue('');
+    } else {
+      Alert.alert('Название дела не может быть пустым');
+    }
   }
 
   return (
     <View style={styles.root}>
-      <TextInput style={styles.input} />
-      <Button title="Добавить" onPress={handleSubmit} />
+      <TextInput 
+        style={styles.input}
+        onChangeText={setValue}
+        value={value}
+        placeholder="Введите название дела"
+      />
+      <Button 
+        title="Добавить"
+        onPress={handleSubmit}
+      />
     </View>
   );
 };
