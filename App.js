@@ -5,7 +5,7 @@ import MainScren from './src/screens/MainScreen';
 import TodoScreen from './src/screens/TodoScreen';
 
 const App = () => {
-  const [todoId, setTodoId] = useState(null);
+  const [todoId, setTodoId] = useState('2');
   const [todos, setTodos] = useState([
     { id: '1', title: 'Изучить React Native' },
     { id: '2', title: 'Написать приложение' },
