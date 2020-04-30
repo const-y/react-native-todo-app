@@ -31,6 +31,7 @@ const App = () => {
           style: 'cancel',
         },
         {text: 'OK', onPress: () => {
+          setTodoId(null);
           setTodos(prev => prev.filter(item => item.id !== id));
         }},
       ],
@@ -54,6 +55,7 @@ const App = () => {
       <TodoScreen
         goBack={() => setTodoId(null)}
         todo={selectedTodo}
+        onRemove={removeTodo}
       />
     );
   }
