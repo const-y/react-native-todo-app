@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 import NavBar from './src/components/NavBar';
 import MainScren from './src/screens/MainScreen';
 import TodoScreen from './src/screens/TodoScreen';
@@ -19,7 +19,23 @@ const App = () => {
   }
 
   const removeTodo = id => {
-    setTodos(prev => prev.filter(item => item.id !== id));
+    const todo = todos.find(t => t.id === id);
+
+    Alert.alert(
+      'Удаление элемента',
+      `Вы уверены, что хотите удалить ${todo.title}?`,
+      [
+    
+        {
+          text: 'Отмена',
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => {
+          setTodos(prev => prev.filter(item => item.id !== id));
+        }},
+      ],
+      {cancelable: false},
+    );
   };
 
   let content = (
