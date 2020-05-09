@@ -7,13 +7,18 @@ import EtitModal from '../components/EditModal';
 const TodoScreen = ({ goBack, todo, onRemove, onSave }) => {
   const [modal, setModal] = useState(false);
 
+  const saveHandler = title => {
+    onSave(todo.id, title);
+    setModal(false);
+  };
+
   return (
     <View>
       <EtitModal
         visible={modal}
         onClose={() => setModal(false)}
         value={todo.title}
-        onSave={onSave}
+        onSave={saveHandler}
       />
 
       <AppCard style={styles.card}>

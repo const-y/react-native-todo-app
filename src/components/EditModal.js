@@ -10,6 +10,8 @@ const EtitModal = ({ visible, onClose, value, onSave }) => {
 			Alert.alert('Ошибка', `Минимальная длина названия 3 символа. Сейчас ${
 				title.trim().length
 			}`)
+		} else {
+			onSave(title);
 		}
 	};
 
