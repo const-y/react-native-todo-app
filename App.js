@@ -39,6 +39,10 @@ const App = () => {
     );
   };
 
+  const updateTodo = title => {
+    
+  };
+
   let content = (
     <MainScren 
       todos={todos} 

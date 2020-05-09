@@ -4,7 +4,7 @@ import { THEME } from '../theme';
 import AppCard from '../components/ui/AppCard';
 import EtitModal from '../components/EditModal';
 
-const TodoScreen = ({ goBack, todo, onRemove }) => {
+const TodoScreen = ({ goBack, todo, onRemove, onSave }) => {
   const [modal, setModal] = useState(false);
 
   return (
@@ -12,6 +12,8 @@ const TodoScreen = ({ goBack, todo, onRemove }) => {
       <EtitModal
         visible={modal}
         onClose={() => setModal(false)}
+        value={todo.title}
+        onSave={onSave}
       />
 
       <AppCard style={styles.card}>
