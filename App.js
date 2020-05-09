@@ -6,9 +6,9 @@ import NavBar from './src/components/NavBar';
 import MainScren from './src/screens/MainScreen';
 import TodoScreen from './src/screens/TodoScreen';
 
-async function loadApplication() {
+async function loadFonts() {
   await Font.loadAsync({
-    'roboto-reqular': require('./assets/fonts/Roboto-Regular.ttf'),
+    'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
     'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf'),
   })
 }
@@ -23,9 +23,9 @@ const App = () => {
   if (!isReady) {
     return (
       <AppLoading
-        startAsync={loadApplication}
+        startAsync={loadFonts}
         onError={e => console.error(e)}
-        onFinish={setIsReady(true)}
+        onFinish={() => setIsReady(true)}
       />
     )
   }
