@@ -25,6 +25,10 @@ const styles = StyleSheet.create({
     borderColor: '#eee',
     borderRadius: 5,
     marginBottom: 10,
+  },
+
+  title: {
+    fontFamily: 'roboto-bold',
   }
 });
 
