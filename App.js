@@ -42,7 +42,7 @@ const App = () => {
   const updateTodo = (id, title) => {
     setTodos(old => old.map(todo => {
       if (todo.id === id) {
-        todo.title = title;
+        return { ...todo, title};
       }
 
       return todo;
