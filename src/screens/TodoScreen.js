@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { THEME } from '../theme';
 import AppCard from '../components/ui/AppCard';
@@ -33,26 +33,22 @@ const TodoScreen = ({ goBack, todo, onRemove, onSave }) => {
 
       <View style={styles.buttons}>
         <View style={styles.button}>
-          <AppButton
-            onPress={goBack}
-            color={THEME.GRAY_COLOR}
-          >
+          <AppButton onPress={goBack} color={THEME.GRAY_COLOR}>
             <AntDesign name="back" size={20} color="white" />
           </AppButton>
         </View>
         <View style={styles.button}>
-          <AppButton 
+          <AppButton
             color={THEME.DANGER_COLOR}
             onPress={() => onRemove(todo.id)}
           >
             <FontAwesome name="remove" size={20} color="white" />
           </AppButton>
         </View>
-        
       </View>
     </View>
-	)
-}
+  );
+};
 
 const styles = StyleSheet.create({
   buttons: {
@@ -61,16 +57,16 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: '40%',
+    width: Dimensions.get('window').width / 3,
   },
 
   title: {
-    fontSize: 20
+    fontSize: 20,
   },
 
   card: {
     marginBottom: 20,
-  }
+  },
 });
 
 export default TodoScreen;
