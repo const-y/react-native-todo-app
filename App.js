@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View, Alert, StatusBar } from 'react-native';
 import * as Font from 'expo-font';
-import {AppLoading} from 'expo'; 
+import { AppLoading } from 'expo';
 import NavBar from './src/components/NavBar';
 import MainScren from './src/screens/MainScreen';
 import TodoScreen from './src/screens/TodoScreen';
+import { THEME } from './src/theme';
 
 async function loadFonts() {
   await Font.loadAsync({
     'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
     'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf'),
-  })
+  });
 }
 
 const App = () => {
@@ -27,15 +28,18 @@ const App = () => {
         onError={e => console.error(e)}
         onFinish={() => setIsReady(true)}
       />
-    )
+    );
   }
 
   const addTodo = title => {
-    setTodos(prev => [...prev, {
-      id: Date.now().toString(),
-      title: title,
-    }]);
-  }
+    setTodos(prev => [
+      ...prev,
+      {
+        id: Date.now().toString(),
+        title: title,
+      },
+    ]);
+  };
 
   const removeTodo = id => {
     const todo = todos.find(t => t.id === id);
@@ -44,36 +48,40 @@ const App = () => {
       'Удаление элемента',
       `Вы уверены, что хотите удалить ${todo.title}?`,
       [
-    
         {
           text: 'Отмена',
           style: 'cancel',
         },
-        {text: 'OK', onPress: () => {
-          setTodoId(null);
-          setTodos(prev => prev.filter(item => item.id !== id));
-        }},
+        {
+          text: 'OK',
+          onPress: () => {
+            setTodoId(null);
+            setTodos(prev => prev.filter(item => item.id !== id));
+          },
+        },
       ],
-      {cancelable: false},
+      { cancelable: false }
     );
   };
 
   const updateTodo = (id, title) => {
-    setTodos(old => old.map(todo => {
-      if (todo.id === id) {
-        return { ...todo, title};
-      }
+    setTodos(old =>
+      old.map(todo => {
+        if (todo.id === id) {
+          return { ...todo, title };
+        }
 
-      return todo;
-    }))
+        return todo;
+      })
+    );
   };
 
   let content = (
-    <MainScren 
-      todos={todos} 
-      addTodo={addTodo} 
-      removeTodo={removeTodo} 
-      openTodo={setTodoId} 
+    <MainScren
+      todos={todos}
+      addTodo={addTodo}
+      removeTodo={removeTodo}
+      openTodo={setTodoId}
     />
   );
 
@@ -92,10 +100,9 @@ const App = () => {
 
   return (
     <View>
-      <NavBar title="Todo App"/>
-      <View style={styles.container}>
-        {content}
-      </View>
+      <StatusBar barStyle="light-content" backgroundColor={THEME.MAIN_COLOR} />
+      <NavBar title="Todo App" />
+      <View style={styles.container}>{content}</View>
     </View>
   );
 };
@@ -104,7 +111,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
     paddingVertical: 20,
-  }
+  },
 });
 
 export default App;
