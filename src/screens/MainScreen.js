@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   StyleSheet,
@@ -10,8 +10,12 @@ import {
 import AddTodo from '../components/AddTodo';
 import Todo from '../components/Todo';
 import { THEME } from '../theme';
+import { TodoContext } from '../context/todo/TodoContext';
+import { ScreenContext } from '../context/screen/screenContext';
 
-const MainScren = ({ todos, addTodo, removeTodo, openTodo }) => {
+const MainScren = () => {
+  const { addTodo, todos, removeTodo } = useContext(TodoContext);
+  const { changeScreen } = useContext(ScreenContext);
   const [deviceWidth, setDeviceWidth] = useState(
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2
   );
@@ -40,7 +44,7 @@ const MainScren = ({ todos, addTodo, removeTodo, openTodo }) => {
         keyExtractor={item => item.id.toString()}
         data={todos}
         renderItem={({ item }) => (
-          <Todo todo={item} onRemove={removeTodo} onOpen={openTodo} />
+          <Todo todo={item} onRemove={removeTodo} onOpen={changeScreen} />
         )}
       />
     </View>

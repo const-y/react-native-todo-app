@@ -4,22 +4,10 @@ import NavBar from './components/NavBar';
 import { THEME } from './theme';
 import MainScren from './screens/MainScreen';
 import TodoScreen from './screens/TodoScreen';
-import { TodoContext } from './context/todo/TodoContext';
+import { ScreenContext } from './context/screen/screenContext';
 
 const MainLayout = () => {
-  const { todos, addTodo, updateTodo, removeTodo } = useContext(TodoContext);
-  const [todoId, setTodoId] = useState(null);
-  // const [todos, setTodos] = useState([]);
-
-  // const addTodo = title => {
-  //   setTodos(prev => [
-  //     ...prev,
-  //     {
-  //       id: Date.now().toString(),
-  //       title: title,
-  //     },
-  //   ]);
-  // };
+  const { todoId } = useContext(ScreenContext);
 
   // const removeTodo = id => {
   //   const todo = todos.find(t => t.id === id);
@@ -44,45 +32,13 @@ const MainLayout = () => {
   //   );
   // };
 
-  // const updateTodo = (id, title) => {
-  //   setTodos(old =>
-  //     old.map(todo => {
-  //       if (todo.id === id) {
-  //         return { ...todo, title };
-  //       }
-
-  //       return todo;
-  //     })
-  //   );
-  // };
-
-  let content = (
-    <MainScren
-      todos={todos}
-      addTodo={addTodo}
-      removeTodo={removeTodo}
-      openTodo={setTodoId}
-    />
-  );
-
-  if (todoId) {
-    const selectedTodo = todos.find(todo => todo.id === todoId);
-
-    content = (
-      <TodoScreen
-        goBack={() => setTodoId(null)}
-        todo={selectedTodo}
-        onRemove={removeTodo}
-        onSave={updateTodo}
-      />
-    );
-  }
-
   return (
     <View>
       <StatusBar barStyle="light-content" backgroundColor={THEME.MAIN_COLOR} />
       <NavBar title="Todo App" />
-      <View style={styles.container}>{content}</View>
+      <View style={styles.container}>
+        {todoId ? <TodoScreen /> : <MainScren />}
+      </View>
     </View>
   );
 };
