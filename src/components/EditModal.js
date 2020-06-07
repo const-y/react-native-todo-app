@@ -1,14 +1,7 @@
-import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  Button,
-  Modal,
-  Alert,
-} from "react-native";
-import { THEME } from "../theme";
-import AppButton from "../components/ui/AppButton";
+import React, { useState } from 'react';
+import { View, StyleSheet, TextInput, Alert, Modal } from 'react-native';
+import { THEME } from '../theme';
+import AppButton from '../components/ui/AppButton';
 
 const EtitModal = ({ visible, onClose, value, onSave }) => {
   const [title, setTitle] = useState(value);
@@ -16,7 +9,7 @@ const EtitModal = ({ visible, onClose, value, onSave }) => {
   const saveHandler = () => {
     if (title.trim().length < 3) {
       Alert.alert(
-        "Ошибка",
+        'Ошибка',
         `Минимальная длина названия 3 символа. Сейчас ${title.trim().length}`
       );
     } else {
@@ -50,20 +43,20 @@ const EtitModal = ({ visible, onClose, value, onSave }) => {
 const styles = StyleSheet.create({
   wrap: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   input: {
     padding: 10,
     borderBottomColor: THEME.MAIN_COLOR,
     borderBottomWidth: 2,
-    width: "80%",
+    width: '80%',
   },
   buttons: {
-    width: "100%",
+    width: '100%',
     marginTop: 10,
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
 });
 
