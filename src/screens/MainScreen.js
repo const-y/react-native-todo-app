@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -12,13 +12,22 @@ import Todo from '../components/Todo';
 import { THEME } from '../theme';
 import { TodoContext } from '../context/todo/TodoContext';
 import { ScreenContext } from '../context/screen/screenContext';
+import AppLoader from '../components/ui/AppLoader';
 
 const MainScren = () => {
-  const { addTodo, todos, removeTodo } = useContext(TodoContext);
+  const { addTodo, todos, removeTodo, fetchTodos, loading, error } = useContext(
+    TodoContext
+  );
   const { changeScreen } = useContext(ScreenContext);
   const [deviceWidth, setDeviceWidth] = useState(
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2
   );
+
+  const loadTodos = useCallback(async () => await fetchTodos(), [fetchTodos]);
+
+  useEffect(() => {
+    loadTodos();
+  }, []);
 
   useEffect(() => {
     const update = () => {
@@ -33,6 +42,10 @@ const MainScren = () => {
       Dimensions.removeEventListener('change', update);
     };
   }, []);
+
+  if (loading) {
+    return <AppLoader />;
+  }
 
   let content = (
     <View
