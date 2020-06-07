@@ -17,6 +17,11 @@ const EtitModal = ({ visible, onClose, value, onSave }) => {
     }
   };
 
+  const cancelHandler = () => {
+    setTitle(value);
+    onClose();
+  };
+
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
       <View style={styles.wrap}>
@@ -30,7 +35,7 @@ const EtitModal = ({ visible, onClose, value, onSave }) => {
           maxLength={64}
         />
         <View style={styles.buttons}>
-          <AppButton onPress={onClose} color={THEME.DANGER_COLOR}>
+          <AppButton onPress={cancelHandler} color={THEME.DANGER_COLOR}>
             Отменить
           </AppButton>
           <AppButton onPress={saveHandler}>Сохранить</AppButton>
