@@ -63,18 +63,25 @@ const TodoState = ({ children }) => {
 
   const fetchTodos = async () => {
     showLoader();
-    const respnse = await fetch(
-      'https://react-native-todo-app-8a664.firebaseio.com/todos.json',
-      {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    clearError();
+    try {
+      const respnse = await fetch(
+        'https://react-native-todo-app-8a664.firebaseio.com/todos.json',
+        {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
 
-    const data = await respnse.json();
-    const todos = Object.keys(data).map(key => ({ ...data[key], id: key }));
-    dispatch({ type: FETCH_TODOS, todos });
-    hideLoader();
+      const data = await respnse.json();
+      const todos = Object.keys(data).map(key => ({ ...data[key], id: key }));
+      dispatch({ type: FETCH_TODOS, todos });
+    } catch (e) {
+      showError('Что-то пошло не так...');
+      console.log(e);
+    } finally {
+      hideLoader();
+    }
   };
 
   const updateTodo = (id, title) => dispatch({ type: UPDATE_TODO, id, title });
