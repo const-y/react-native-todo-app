@@ -51,9 +51,23 @@ const TodoState = ({ children }) => {
         },
         {
           text: 'OK',
-          onPress: () => {
-            changeScreen(null);
-            dispatch({ type: REMOVE_TODO, id });
+          onPress: async () => {
+            clearError();
+            try {
+              await fetch(
+                `https://react-native-todo-app-8a664.firebaseio.com/todos/${id}.json`,
+                {
+                  method: 'DELETE',
+                  headers: { 'Contetn-Type': 'application/json' },
+                }
+              );
+              dispatch({ type: REMOVE_TODO, id });
+            } catch (e) {
+              showError('Что-то пошло не так...');
+              console.log(e);
+            } finally {
+              changeScreen(null);
+            }
           },
         },
       ],
