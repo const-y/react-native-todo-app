@@ -13,6 +13,7 @@ import {
   FETCH_TODOS,
 } from '../types';
 import { ScreenContext } from '../screen/screenContext';
+import { Http } from '../../http';
 
 const initialState = {
   todos: [],
@@ -25,16 +26,10 @@ const TodoState = ({ children }) => {
   const [state, dispatch] = useReducer(todoReducer, initialState);
 
   const addTodo = async title => {
-    const response = await fetch(
+    const data = await Http.post(
       'https://react-native-todo-app-8a664.firebaseio.com/todos.json',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title }),
-      }
+      { title }
     );
-
-    const data = await response.json();
     dispatch({ type: ADD_TODO, title, id: data.name });
   };
 
@@ -54,12 +49,8 @@ const TodoState = ({ children }) => {
           onPress: async () => {
             clearError();
             try {
-              await fetch(
-                `https://react-native-todo-app-8a664.firebaseio.com/todos/${id}.json`,
-                {
-                  method: 'DELETE',
-                  headers: { 'Contetn-Type': 'application/json' },
-                }
+              await Http.delete(
+                `https://react-native-todo-app-8a664.firebaseio.com/todos/${id}.json`
               );
               dispatch({ type: REMOVE_TODO, id });
             } catch (e) {
@@ -79,15 +70,9 @@ const TodoState = ({ children }) => {
     showLoader();
     clearError();
     try {
-      const respnse = await fetch(
-        'https://react-native-todo-app-8a664.firebaseio.com/todos.json',
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        }
+      const data = await Http.get(
+        'https://react-native-todo-app-8a664.firebaseio.com/todos.json'
       );
-
-      const data = await respnse.json();
       const todos = Object.keys(data).map(key => ({ ...data[key], id: key }));
       dispatch({ type: FETCH_TODOS, todos });
     } catch (e) {
@@ -101,13 +86,9 @@ const TodoState = ({ children }) => {
   const updateTodo = async (id, title) => {
     clearError();
     try {
-      await fetch(
+      await Http.patch(
         `https://react-native-todo-app-8a664.firebaseio.com/todos/${id}.json`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title }),
-        }
+        { title }
       );
       dispatch({ type: UPDATE_TODO, id, title });
     } catch (e) {
